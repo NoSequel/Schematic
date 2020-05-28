@@ -48,6 +48,7 @@ public class JsonSavingType implements SavingType {
         }
     }
 
+
     @Override
     public void save(Schematic schematic) throws IOException {
         final File file = new File(path + File.separator + schematic.getName());

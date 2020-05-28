@@ -3,6 +3,7 @@ package io.github.nosequel.schematic.util;
 public class ThreadUtil {
 
     private static final int priority = Thread.MIN_PRIORITY;
+
     private static Callback method;
     private static Thread thread;
 
@@ -21,7 +22,6 @@ public class ThreadUtil {
             }, "Schematic Thread");
             thread.setPriority(priority);
         }
-
 
         method = callback;
         thread.resume();
