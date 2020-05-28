@@ -61,6 +61,11 @@ public class SchematicBlock {
         );
     }
 
+    /**
+     * Change the Object to a String
+     *
+     * @return the string
+     */
     public String toString() {
         return String.join(",",
                 new String[]{
