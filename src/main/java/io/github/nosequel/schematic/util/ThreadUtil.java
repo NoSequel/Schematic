@@ -22,6 +22,7 @@ public class ThreadUtil {
             thread.setPriority(priority);
         }
 
+        e
         method = callback;
         thread.resume();
     }
