@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 public class JsonSavingType implements SavingType {
 
     private final Gson gson = new GsonBuilder().create();
-    private final String blockSpliterator = "!=";
+    private final String blockSpliterator = "||";
     private final String path;
 
     /**
