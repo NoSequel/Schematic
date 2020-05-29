@@ -16,7 +16,7 @@ public class JavaUtils {
      * @return the new list of chunks
      */
     public static <T> Collection<List<T>> splitList(List<T> list, int chunkSize) {
-        final AtomicInteger current = new AtomicInteger();
+        final AtomicInteger current = new AtomicInteger(1);
 
         return list.stream()
                 .collect(Collectors.groupingBy(number -> current.getAndIncrement() / chunkSize))
