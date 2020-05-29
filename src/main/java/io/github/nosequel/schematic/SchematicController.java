@@ -36,24 +36,8 @@ public class SchematicController {
 
         this.savingType = type;
         this.schematicImplementation = schematicImplementation;
-        this.createMethod = name -> {
-            Schematic schematic = null;
-            Constructor<?> constructor;
-
-            try {
-                constructor = this.schematicImplementation.getDeclaredConstructor(String.class);
-                constructor.setAccessible(true);
-
-                schematic = (Schematic) constructor.newInstance(name);
-
-                schematics.add(schematic);
-            } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException reflectiveOperationException) {
-                reflectiveOperationException.printStackTrace();
-            }
 
 
-            return schematic;
-        };
     }
 
     /**
@@ -76,7 +60,7 @@ public class SchematicController {
      * @return the created schematic
      */
     public Schematic createSchematic(String name) {
-        return createMethod.apply(name);
+        return this.getCreateMethod().apply(name);
     }
 
     /**
@@ -89,6 +73,36 @@ public class SchematicController {
         return schematics.stream()
                 .filter(schematic -> schematic.getName().equalsIgnoreCase(name))
                 .findFirst().orElse(null);
+    }
+
+    /**
+     * Get the create Function
+     *
+     * @return the function
+     */
+    private Function<String, Schematic> getCreateMethod() {
+        if(this.createMethod == null) {
+            this.createMethod = name -> {
+                Schematic schematic = null;
+                Constructor<?> constructor;
+
+                try {
+                    constructor = this.schematicImplementation.getDeclaredConstructor(String.class);
+                    constructor.setAccessible(true);
+
+                    schematic = (Schematic) constructor.newInstance(name);
+
+                    schematics.add(schematic);
+                } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException reflectiveOperationException) {
+                    reflectiveOperationException.printStackTrace();
+                }
+
+
+                return schematic;
+            };
+        }
+
+        return this.createMethod;
     }
 
     /**
