@@ -40,7 +40,7 @@ public class ChunkedSchematic extends Schematic {
                         }));
 
                         try {
-                            Thread.sleep(25);
+                            Thread.sleep(2);
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
