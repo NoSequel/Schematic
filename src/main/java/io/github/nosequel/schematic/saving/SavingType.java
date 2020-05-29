@@ -4,7 +4,7 @@ import io.github.nosequel.schematic.Schematic;
 
 import java.io.File;
 
-public interface SavingType {
+public interface SavingType<T> {
 
     /**
      * Save a schematic in the file
@@ -18,6 +18,6 @@ public interface SavingType {
      *
      * @return the list of schematics
      */
-    Schematic load(File file) throws Exception;
+    Schematic load(T file) throws Exception;
 
 }

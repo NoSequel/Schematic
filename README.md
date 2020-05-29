@@ -15,7 +15,7 @@ To use this API you must create a new SchematicController instance.
     * JsonSavingType
   * Implementing your own SavingType
 ```java
-    public class ExampleSavingType implements SavingType {
+    public class ExampleSavingType implements SavingType<File> {
     
         public Schematic load(File file) {
             Schematic schematic;

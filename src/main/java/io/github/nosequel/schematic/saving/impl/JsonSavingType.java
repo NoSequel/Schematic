@@ -17,7 +17,7 @@ import java.util.Arrays;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-public class JsonSavingType implements SavingType {
+public class JsonSavingType implements SavingType<File> {
 
     private final Gson gson = new GsonBuilder().create();
     private final String blockSpliterator = "||";
