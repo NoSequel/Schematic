@@ -9,10 +9,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Getter
-public class BasicSchematic implements Schematic {
+public class BasicSchematic extends Schematic {
 
     private final List<SchematicBlock> blocks = new ArrayList<>();
-    private final String name;
 
     /**
      * Constructor for creating a new BasicSchematic
@@ -20,7 +19,7 @@ public class BasicSchematic implements Schematic {
      * @param name the name of the schematic
      */
     public BasicSchematic(String name) {
-        this.name = name;
+        super(name);
     }
 
     @Override

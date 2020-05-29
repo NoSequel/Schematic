@@ -67,7 +67,7 @@ public class SchematicController {
      * @param name the name of the schematic
      * @return the found schematic | or null.
      */
-    public Schematic findSchematic(String name){
+    public Schematic findSchematic(String name) {
         return schematics.stream()
                 .filter(schematic -> schematic.getName().equalsIgnoreCase(name))
                 .findFirst().orElse(null);
@@ -79,22 +79,17 @@ public class SchematicController {
      * @return the function
      */
     private Function<String, Schematic> getCreateMethod() {
-        if(this.createMethod == null) {
+        if (this.createMethod == null) {
             this.createMethod = name -> {
                 Schematic schematic = null;
-                Constructor<?> constructor;
 
                 try {
-                    constructor = this.schematicImplementation.getDeclaredConstructor(String.class);
-                    constructor.setAccessible(true);
+                    final Constructor<?> constructor = this.getSchematicImplementation().getDeclaredConstructor(String.class);
 
                     schematic = (Schematic) constructor.newInstance(name);
-
-                    schematics.add(schematic);
-                } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException reflectiveOperationException) {
-                    reflectiveOperationException.printStackTrace();
+                } catch (NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e) {
+                    e.printStackTrace();
                 }
-
 
                 return schematic;
             };

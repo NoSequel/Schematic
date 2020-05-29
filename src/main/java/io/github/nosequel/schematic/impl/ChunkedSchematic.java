@@ -11,10 +11,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Getter
-public class ChunkedSchematic implements Schematic {
+public class ChunkedSchematic extends Schematic {
 
     private final List<SchematicBlock> blocks = new ArrayList<>();
-    private final String name;
 
     /**
      * Constructor for creating a new ChunkedSchematic
@@ -22,7 +21,7 @@ public class ChunkedSchematic implements Schematic {
      * @param name the name of the schematic
      */
     public ChunkedSchematic(String name) {
-        this.name = name;
+        super(name);
     }
 
     @Override
