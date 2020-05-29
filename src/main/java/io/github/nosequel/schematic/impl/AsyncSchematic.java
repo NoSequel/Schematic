@@ -20,8 +20,6 @@ public class AsyncSchematic extends BasicSchematic {
 
     @Override
     public void build(Location location) {
-        ThreadUtil.execute(() -> this.getBlocks().forEach((block -> {
-            super.build(location);
-        })));
+        ThreadUtil.execute(() -> this.getBlocks().forEach((block -> super.build(location))));
     }
 }

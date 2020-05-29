@@ -2,8 +2,6 @@ package io.github.nosequel.schematic.saving;
 
 import io.github.nosequel.schematic.Schematic;
 
-import java.io.File;
-
 public interface SavingType<T> {
 
     /**

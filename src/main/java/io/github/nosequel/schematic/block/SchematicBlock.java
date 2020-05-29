@@ -10,9 +10,9 @@ import org.bukkit.Material;
 public class SchematicBlock {
 
     private int positionX, positionY, positionZ;
+    private byte data;
 
     private Material type;
-    private byte data;
 
     /**
      * Constructor for creating a new BasicSchematicBlock
@@ -67,13 +67,12 @@ public class SchematicBlock {
      * @return the string
      */
     public String toString() {
-        return String.join(",",
-                new String[]{
-                        String.valueOf(positionX),
-                        String.valueOf(positionY),
-                        String.valueOf(positionZ),
-                        type.name(),
-                        String.valueOf(data)
-                });
+        return String.join(",", new String[]{
+                String.valueOf(positionX),
+                String.valueOf(positionY),
+                String.valueOf(positionZ),
+                type.name(),
+                String.valueOf(data)
+        });
     }
 }

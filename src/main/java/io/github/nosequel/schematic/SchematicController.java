@@ -1,12 +1,15 @@
 package io.github.nosequel.schematic;
 
 import io.github.nosequel.schematic.saving.SavingType;
+
 import lombok.Getter;
+import lombok.Setter;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Function;
 
 
 @Getter
@@ -16,7 +19,10 @@ public class SchematicController {
 
     private final Class<? extends Schematic> schematicImplementation;
     private final List<Schematic> schematics = new ArrayList<>();
-    private final SavingType savingType;
+    private final SavingType<?> savingType;
+
+    @Setter
+    private Function<String, Schematic> createMethod;
 
 
     /**
@@ -25,11 +31,29 @@ public class SchematicController {
      * @param type                    the type of the saving interface
      * @param schematicImplementation the implementation of the schematic
      */
-    public SchematicController(SavingType type, Class<? extends Schematic> schematicImplementation) {
+    public SchematicController(SavingType<?> type, Class<? extends Schematic> schematicImplementation) {
         instance = this;
 
         this.savingType = type;
         this.schematicImplementation = schematicImplementation;
+        this.createMethod = name -> {
+            Schematic schematic = null;
+            Constructor<?> constructor;
+
+            try {
+                constructor = this.schematicImplementation.getDeclaredConstructor(String.class);
+                constructor.setAccessible(true);
+
+                schematic = (Schematic) constructor.newInstance(name);
+
+                schematics.add(schematic);
+            } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException reflectiveOperationException) {
+                reflectiveOperationException.printStackTrace();
+            }
+
+
+            return schematic;
+        };
     }
 
     /**
@@ -50,19 +74,9 @@ public class SchematicController {
      *
      * @param name the name of the schematic
      * @return the created schematic
-     * @throws NoSuchMethodException     thrown whenever the constructor isn't found
-     * @throws IllegalAccessException    thrown whenever you don't have access to the constructor
-     * @throws InvocationTargetException thrown whenever there's an error while invoking the constructor
-     * @throws InstantiationException    thrown whenever instantiating the object
      */
-    public Schematic createSchematic(String name) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
-        final Constructor<?> constructor = this.schematicImplementation.getDeclaredConstructor(String.class);
-        constructor.setAccessible(true);
-
-        final Schematic schematic = (Schematic) constructor.newInstance(name);
-
-        schematics.add(schematic);
-        return schematic;
+    public Schematic createSchematic(String name) {
+        return createMethod.apply(name);
     }
 
     /**
@@ -73,5 +87,4 @@ public class SchematicController {
     public static SchematicController get() {
         return instance;
     }
-
 }
