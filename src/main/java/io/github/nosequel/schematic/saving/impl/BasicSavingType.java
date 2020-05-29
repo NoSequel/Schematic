@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 
 public class BasicSavingType implements SavingType<File> {
 
-    private final String blockSpliterator = "||";
+    private final String blockSpliterator = "==!";
     private final String path;
 
     /**
