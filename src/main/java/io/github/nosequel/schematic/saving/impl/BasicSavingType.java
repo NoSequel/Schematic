@@ -15,7 +15,7 @@ import java.util.Arrays;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-public class JsonSavingType implements SavingType<File> {
+public class BasicSavingType implements SavingType<File> {
 
     private final String blockSpliterator = "||";
     private final String path;
@@ -25,7 +25,7 @@ public class JsonSavingType implements SavingType<File> {
      *
      * @param path the path the files will be located in
      */
-    public JsonSavingType(String path) {
+    public BasicSavingType(String path) {
         this.path = path;
 
         final File directory = new File(path);

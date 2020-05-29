@@ -36,8 +36,6 @@ public class SchematicController {
 
         this.savingType = type;
         this.schematicImplementation = schematicImplementation;
-
-
     }
 
     /**
