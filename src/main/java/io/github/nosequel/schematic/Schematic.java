@@ -18,6 +18,8 @@ public abstract class Schematic {
      */
     public Schematic(String name) {
         this.name = name;
+
+        SchematicController.get().getSchematics().add(this);
     }
 
     /**
