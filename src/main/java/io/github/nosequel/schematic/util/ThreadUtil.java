@@ -13,17 +13,14 @@ public class ThreadUtil {
      * @param callback the method
      */
     public static void execute(Callback callback) {
+        method = callback;
+
         if (thread == null) {
-            thread = new Thread(() -> {
+            thread = new Thread(() -> method.accept(), "Schematic Thread");
 
-                method.accept();
-                Thread.currentThread().stop();
-
-            }, "Schematic Thread");
             thread.setPriority(priority);
         }
 
-        method = callback;
-        thread.resume();
+        thread.run();
     }
 }
