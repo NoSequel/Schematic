@@ -19,7 +19,6 @@ import java.util.stream.Collectors;
 
 public class JsonSavingType implements SavingType<File> {
 
-    private final Gson gson = new GsonBuilder().create();
     private final String blockSpliterator = "||";
     private final String path;
 
@@ -41,7 +40,7 @@ public class JsonSavingType implements SavingType<File> {
             for (File file : Objects.requireNonNull(directory.listFiles())) {
                 try {
                     this.load(file);
-                } catch (FileNotFoundException | InvocationTargetException | NoSuchMethodException | InstantiationException | IllegalAccessException e) {
+                } catch (IOException e) {
                     e.printStackTrace();
                 }
             }
@@ -63,22 +62,24 @@ public class JsonSavingType implements SavingType<File> {
 
         final FileWriter writer = new FileWriter(file);
 
-        gson.toJson(
-                schematic.getBlocks().stream()
-                        .map(SchematicBlock::toString)
-                        .collect(Collectors.joining(blockSpliterator)),
-                writer);
-
+        writer.write(schematic.getBlocks().stream().map(SchematicBlock::toString).collect(Collectors.joining(blockSpliterator)));
         writer.flush();
         writer.close();
     }
 
     @Override
-    public Schematic load(File file) throws FileNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
+    public Schematic load(File file) throws IOException {
         final FileReader reader = new FileReader(file);
-        final String string = gson.fromJson(reader, String.class);
-        final String[] strings = string.split(blockSpliterator);
-        final Schematic schematic = SchematicController.get().createSchematic(file.getName().replace(".json", ""));
+        final StringBuilder string = new StringBuilder();
+
+        int content;
+
+        while ((content = reader.read()) != -1) {
+            string.append((char) content);
+        }
+
+        final String[] strings = string.toString().split(blockSpliterator);
+        final Schematic schematic = SchematicController.get().createSchematic(file.getName());
 
         Arrays.stream(strings).forEach(str -> schematic.getBlocks().add(new SchematicBlock(str)));
 

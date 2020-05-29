@@ -80,6 +80,18 @@ public class SchematicController {
     }
 
     /**
+     * Find a schematic by a name
+     *
+     * @param name the name of the schematic
+     * @return the found schematic | or null.
+     */
+    public Schematic findSchematic(String name){
+        return schematics.stream()
+                .filter(schematic -> schematic.getName().equalsIgnoreCase(name))
+                .findFirst().orElse(null);
+    }
+
+    /**
      * Get the current SchematicController instance
      *
      * @return the instance
