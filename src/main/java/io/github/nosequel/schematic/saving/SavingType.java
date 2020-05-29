@@ -5,6 +5,11 @@ import io.github.nosequel.schematic.Schematic;
 public interface SavingType<T> {
 
     /**
+     * Called upon enablement of the SavingType
+     */
+    void enable();
+
+    /**
      * Save a schematic in the file
      *
      * @param schematic the schematic

@@ -27,7 +27,10 @@ public class BasicSavingType implements SavingType<File> {
      */
     public BasicSavingType(String path) {
         this.path = path;
+    }
 
+    @Override
+    public void enable() {
         final File directory = new File(path);
 
         if (directory.mkdir()) {
@@ -44,7 +47,6 @@ public class BasicSavingType implements SavingType<File> {
             }
         }
     }
-
 
     @Override
     public void save(Schematic schematic) throws IOException {
