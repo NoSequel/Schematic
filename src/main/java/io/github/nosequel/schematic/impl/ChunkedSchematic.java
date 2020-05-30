@@ -26,16 +26,12 @@ public class ChunkedSchematic extends Schematic {
 
     @Override
     public void build(Location location) {
-        ThreadUtil.execute(() -> {
-            final List<SchematicBlock> blocks = this.getBlocks();
+        JavaUtils.splitList(blocks, Math.min(350, blocks.size() / 10)).forEach(current -> ThreadUtil.execute(() -> current.forEach((block -> {
+            final Location relativeLocation = block.getRelativeLocation(location);
+            final org.bukkit.block.Block black = relativeLocation.getBlock();
 
-            JavaUtils.splitList(blocks, Math.min(350, blocks.size() / 10)).forEach(current -> new Thread(() -> current.forEach((block -> {
-                final Location relativeLocation = block.getRelativeLocation(location);
-                final org.bukkit.block.Block black = relativeLocation.getBlock();
-
-                black.setType(block.getType());
-                black.setData(block.getData());
-            }))).start());
-        });
+            black.setType(block.getType());
+            black.setData(block.getData());
+        }))));
     }
 }
