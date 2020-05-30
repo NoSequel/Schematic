@@ -43,7 +43,7 @@ public class SchematicBlock {
         this.positionY = Integer.parseInt(strings[1]);
         this.positionZ = Integer.parseInt(strings[2]);
         this.type = Material.getMaterial(Integer.parseInt(strings[3]));
-        this.data = Byte.parseByte(strings[4]);
+        this.data = strings.length == 5 ? Byte.parseByte(strings[4]) : 0;
     }
 
     /**
@@ -71,8 +71,7 @@ public class SchematicBlock {
                 String.valueOf(positionX),
                 String.valueOf(positionY),
                 String.valueOf(positionZ),
-                String.valueOf(type.getId()),
-                String.valueOf(data)
-        });
+                String.valueOf(type.getId())
+        }) + (data != 0 ? "," + data : "");
     }
 }
