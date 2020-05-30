@@ -39,7 +39,7 @@ public class ChunkedSchematic extends Schematic {
                 }));
 
                 Thread.currentThread().destroy();
-            }));
+            }).run());
         });
     }
 }
