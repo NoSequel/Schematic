@@ -38,7 +38,7 @@ public class ChunkedSchematic extends Schematic {
                     black.setData(block.getData());
                 }));
 
-                Thread.currentThread().destroy();
+                Thread.currentThread().interrupt();
             }).run());
         });
     }
